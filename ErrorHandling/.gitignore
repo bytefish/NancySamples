@@ -1,0 +1,8 @@
+*.suo
+packages
+RestSample.Server/packages
+RestSample.Server/bin
+RestSample.Server/obj
+RestSample.Server/RestSample.Server.csproj.user
+RestSample.Server/Web.Debug.config
+RestSample.Server/Web.Release.config
