@@ -6,3 +6,4 @@ RestSample.Server/obj
 RestSample.Server/RestSample.Server.csproj.user
 RestSample.Server/Web.Debug.config
 RestSample.Server/Web.Release.config
+TestResults
