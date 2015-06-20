@@ -32,9 +32,9 @@ And then you can create the database tables by running the ``Database/create_dat
 The module exposes the following endpoints:
 
 * ``auth/register``
-** Registers a new API user.
+    * Registers a new API user.
 * ``auth/token`` 
-** Generates a new Authorization token for a given API user
+    * Generates a new Authorization token for a given API user
 
 To register and obtain a Token a simple JSON object is used, stored to ``user_password.json``:
 
@@ -88,13 +88,13 @@ We can now use the token for the sample ``FileUploadModule``, which exposes the 
 The file can be uploaded by sending a simple ``multipart/form-data`` with the fields:
 
 * ``file``
-** The file content.
+    * The file content.
 * ``title``
-** The title of the File.
+    * The title of the File.
 * ``description``
-** A description of the files content.
+    * A description of the files content.
 * ``tags``
-** A comma separated list of tags.
+    * A comma separated list of tags.
 
 You'll need to add the ``Authorization`` Header with the Token obtained from the ``AuthModule``.
 
