@@ -10,12 +10,12 @@ namespace RestSample.Server.Infrastructure.Database
     public class LoggingDatabase : NPoco.Database
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        
+
         public LoggingDatabase(ConnectionStringSettings connectionString) : base(connectionString.ConnectionString, connectionString.ProviderName) { }
 
         protected override void OnExecutingCommand(IDbCommand cmd)
         {
-            if(log.IsDebugEnabled) 
+            if (log.IsDebugEnabled)
             {
                 log.Debug(FormatCommand(cmd));
             }
@@ -23,12 +23,12 @@ namespace RestSample.Server.Infrastructure.Database
 
         protected override void OnException(System.Exception exception)
         {
- 	         base.OnException(exception);
+            base.OnException(exception);
 
-             if (log.IsErrorEnabled)
-             {
-                 log.Error(exception);
-             }
+            if (log.IsErrorEnabled)
+            {
+                log.Error(exception);
+            }
         }
     }
 }
