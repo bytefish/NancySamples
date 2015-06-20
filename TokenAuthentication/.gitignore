@@ -1,0 +1,12 @@
+Database/query_output.log
+Database/stderr.log
+Database/stdout.log
+TokenAuthenticationSample/bin
+TokenAuthenticationSample/keyStore
+TokenAuthenticationSample/obj
+TokenAuthenticationSample/packages
+TokenAuthenticationSample/TestResults
+TokenAuthenticationSample/RestSample.Server.csproj.user
+TokenAuthenticationSample/RestSample.Server.v11.suo
+RestSample.Server/Web.Debug.config
+RestSample.Server/Web.Release.config
