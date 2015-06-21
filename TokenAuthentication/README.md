@@ -83,7 +83,7 @@ BYeiMkamX4sG41ACZJeTPhjtGqkqTs="}
 We can now use the token for the sample ``FileUploadModule``, which exposes the following endpoints:
 
 * ``file/upload``
-** Endpoint for uploading a file. Requires an Authentication Token.
+    * Endpoint for uploading a file. Requires an Authentication Token.
 
 The file can be uploaded by sending a simple ``multipart/form-data`` with the fields:
 
