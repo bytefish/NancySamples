@@ -1,0 +1,22 @@
+﻿// Copyright (c) Philipp Wagner. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using NPoco.FluentMappings;
+using ConnectR.Infrastructure.Database.Entities;
+
+namespace ConnectR.Infrastructure.Database.Mapping
+{
+    public class ClaimMapping : Map<Claim>
+    {
+        public ClaimMapping()
+        {
+            PrimaryKey(p => p.Id, autoIncrement: true)
+                .TableName("auth.claim")
+                .Columns(x =>
+                {
+                    x.Column(p => p.Id).WithName("claim_id");
+                    x.Column(p => p.Name).WithName("name");
+                });
+        }
+    }
+}
