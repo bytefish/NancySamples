@@ -7,7 +7,6 @@ using System.Text;
 
 namespace ConnectR.Services
 {
-
     public class CryptoService : ICryptoService
     {
         private IApplicationSettings settings;

@@ -1,14 +1,20 @@
-﻿
+﻿// Copyright (c) Philipp Wagner. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using ConnectR.Hubs;
 using ConnectR.Infrastructure.Database;
 using ConnectR.Infrastructure.SignalR;
+using ConnectR.Security;
 using ConnectR.Services;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.Owin;
 using Microsoft.Owin.Cors;
+using Microsoft.Owin.Security.OAuth;
 using Nancy.Owin;
 using Nancy.TinyIoc;
 using Owin;
+using System;
 
 namespace ConnectR
 {
@@ -21,9 +27,9 @@ namespace ConnectR
             TinyIoCContainer container = new TinyIoCContainer();
 
             RegisterDependencies(container);
-            
-            SetupSignalR(app, container);
 
+            SetupAuth(app, container);
+            SetupSignalR(app, container);
             SetupNancy(app, container);
         }
 
@@ -31,17 +37,33 @@ namespace ConnectR
         {
             // Make some Registrations:
             container.Register<IMappingProvider, MappingProvider>();
-            container.Register<IDatabaseFactory, DatabaseFactory>();
             container.Register<IConnectionStringProvider, ConnectionStringProvider>();
+            container.Register<IDatabaseFactory, DatabaseFactory>().AsSingleton(); // Don't instantiate twice. 
             container.Register<IApplicationSettings, ApplicationSettings>();
             container.Register<ICryptoService, CryptoService>();
             container.Register<IAuthService, DatabaseAuthService>();
             container.Register<IChatService, LoggingChatService>();
-
-
+            
             // Register Hubs:
             container.Register<LoggingHubPipelineModule>();
             container.Register<ChatHub>();
+        }
+
+        private void SetupAuth(IAppBuilder app, TinyIoCContainer container)
+        {
+            var settings = container.Resolve<IApplicationSettings>();
+
+            // Register a Token-based Authentication for the App:            
+            app.UseOAuthAuthorizationServer(new OAuthAuthorizationServerOptions
+            {
+                AllowInsecureHttp = true, // you should use this for debugging only
+                TokenEndpointPath = new PathString(settings.TokenEndpointBasePath),
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(8),
+                Provider = new SimpleAuthorizationServerProvider(container.Resolve<IAuthService>())
+            });
+
+            // Use default options:
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
 
         private void SetupNancy(IAppBuilder app, TinyIoCContainer container)

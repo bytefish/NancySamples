@@ -85,6 +85,9 @@
       <HintPath>..\packages\Nancy.1.2.0\lib\net40\Nancy.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Nancy.MSOwinSecurity">
+      <HintPath>..\packages\Nancy.MSOwinSecurity.1.0.1\lib\net45\Nancy.MSOwinSecurity.dll</HintPath>
+    </Reference>
     <Reference Include="Nancy.Owin, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nancy.Owin.1.2.0\lib\net40\Nancy.Owin.dll</HintPath>
       <Private>True</Private>
@@ -138,6 +141,9 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="Infrastructure\Authentication\Constants.cs" />
+    <Compile Include="Infrastructure\Authentication\Credentials.cs" />
+    <Compile Include="Infrastructure\Authentication\PrincipalExtensions.cs" />
     <Compile Include="Infrastructure\Database\ConnectionString.cs" />
     <Compile Include="Infrastructure\Database\ConnectionStringProvider.cs" />
     <Compile Include="Infrastructure\Database\DatabaseFactory.cs" />
@@ -157,8 +163,10 @@
     <Compile Include="Infrastructure\Nancy\Extensions\VersionConstraintExtension.cs" />
     <Compile Include="Infrastructure\SignalR\LoggingHubPipelineModule.cs" />
     <Compile Include="Infrastructure\SignalR\TinyDependencyResolver.cs" />
+    <Compile Include="Model\ClaimIdentity.cs" />
+    <Compile Include="Model\UserIdentity.cs" />
     <Compile Include="Modules\FileUploadModule.cs" />
-    <Compile Include="Requests\AuthenticateUserRequest.cs" />
+    <Compile Include="Modules\RegistrationModule.cs" />
     <Compile Include="Requests\Binding\FileUploadRequestBinder.cs" />
     <Compile Include="Requests\FileUploadRequest.cs" />
     <Compile Include="Requests\RegisterUserRequest.cs" />

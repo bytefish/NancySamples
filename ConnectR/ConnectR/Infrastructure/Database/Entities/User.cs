@@ -6,7 +6,7 @@ namespace ConnectR.Infrastructure.Database.Entities
     public class User : Entity
     {
         public string Name { get; set; }
-
+        
         public string PasswordHash { get; set; }
 
         public string PasswordSalt { get; set; }

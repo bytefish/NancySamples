@@ -17,6 +17,7 @@ namespace ConnectR.Infrastructure.Database.Mapping
                     x.Column(p => p.Id).WithName("user_claim_id");
                     x.Column(p => p.UserId).WithName("user_id");
                     x.Column(p => p.ClaimId).WithName("claim_id");
+                    x.Column(p => p.Value).WithName("value");
                 });
         }
     }

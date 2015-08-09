@@ -9,6 +9,8 @@ namespace ConnectR.Infrastructure.Database.Entities
 
         public string ClaimId { get; set; }
 
+        public string Value { get; set; }
+
         public override string ToString()
         {
             return string.Format("{0}, UserClaim (UserId: {1}, ClaimId: {2})", base.ToString(), UserId, ClaimId);

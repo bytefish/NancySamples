@@ -17,7 +17,7 @@ namespace ConnectR.Services
 
         public int SaltSize
         {
-            get { return 13;  }
+            get { return 13; }
         }
 
         public string FileUploadDirectory
@@ -27,18 +27,17 @@ namespace ConnectR.Services
 
         public string NancyBasePath
         {
-            get
-            {
-                return "/api";
-            }
+            get { return "/api"; }
         }
 
         public string SignalRBasePath
         {
-            get
-            {
-                return "/signalr";
-            }
+            get { return "/signalr"; }
+        }
+
+        public string TokenEndpointBasePath
+        {
+            get { return "/token"; }
         }
     }
 }

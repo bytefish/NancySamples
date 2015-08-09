@@ -1,13 +1,3 @@
 .vs
 *.suo
 packages
-
-ConnectR/bin
-ConnectR/obj
-ConnectR/ConnectR.csproj.user
-
-ConnectR.Client/bin
-ConnectR.Client/obj
-ConnectR.Client/Web.Debug.config
-ConnectR.Client/Web.Release.config
-ConnectR.Client/ConnectR.Client.csproj.user

@@ -1,0 +1,111 @@
+********* QUERY **********
+DO $$
+BEGIN
+
+IF NOT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'auth') THEN
+
+    CREATE SCHEMA auth;
+
+END IF;
+
+END;
+$$;
+**************************
+
+DO
+********* QUERY **********
+DO $$
+BEGIN
+
+IF NOT EXISTS (
+	SELECT 1 
+	FROM information_schema.tables 
+	WHERE  table_schema = 'auth' 
+	AND table_name = 'user'
+) THEN
+
+CREATE TABLE auth.user
+(
+	user_id SERIAL PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	password_hash VARCHAR(255) NOT NULL,
+	password_salt VARCHAR(255) NOT NULL
+);
+
+END IF;
+
+IF NOT EXISTS (
+	SELECT 1 
+	FROM information_schema.tables 
+	WHERE  table_schema = 'auth' 
+	AND table_name = 'claim'
+) THEN
+
+CREATE TABLE auth.claim
+(
+	claim_id SERIAL PRIMARY KEY,
+	type VARCHAR(255) NOT NULL,
+	value VARCHAR(255) NOT NULL
+);
+
+END IF;
+
+IF NOT EXISTS (
+	SELECT 1 
+	FROM information_schema.tables 
+	WHERE  table_schema = 'auth' 
+	AND table_name = 'user_claim'
+) THEN
+
+CREATE TABLE auth.user_claim
+(
+	user_claim_id SERIAL PRIMARY KEY,
+	user_id INTEGER NOT NULL,
+	claim_id INTEGER NOT NULL
+);
+
+END IF;
+
+END;
+$$;
+**************************
+
+DO
+********* QUERY **********
+DO $$
+BEGIN
+
+IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'user_claim_userid_fkey') THEN
+	ALTER TABLE auth.user_claim
+		ADD CONSTRAINT user_claim_userid_fkey
+		FOREIGN KEY (user_id) REFERENCES auth.user(user_id);
+END IF;
+
+IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'user_claim_claimid_fkey') THEN
+	ALTER TABLE auth.user_claim
+		ADD CONSTRAINT user_claim_claimid_fkey
+		FOREIGN KEY (claim_id) REFERENCES auth.claim(claim_id);
+END IF;
+
+IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'uk_user_name') THEN
+	ALTER TABLE auth.user
+		ADD CONSTRAINT uk_user_name
+		UNIQUE (name);
+END IF;
+
+END;
+$$;
+**************************
+
+DO
+********* QUERY **********
+DO $$
+BEGIN
+
+REVOKE ALL ON auth.user FROM public;
+
+END;
+$$;
+**************************
+
+DO

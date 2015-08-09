@@ -1,5 +1,9 @@
-﻿
+﻿// Copyright (c) Philipp Wagner. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using Nancy;
+using Nancy.Security;
+using System.Security.Claims;
 
 namespace ConnectR.Infrastructure.Nancy
 {
@@ -13,6 +17,11 @@ namespace ConnectR.Infrastructure.Nancy
         public ConnectRModule(string modulePath)
             : base(modulePath)
         {
+        }
+
+        protected ClaimsPrincipal Principal
+        {
+            get { return this.Context.GetMSOwinUser(); }
         }
     }
 }

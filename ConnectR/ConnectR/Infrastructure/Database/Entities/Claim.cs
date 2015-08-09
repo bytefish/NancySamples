@@ -5,11 +5,13 @@ namespace ConnectR.Infrastructure.Database.Entities
 {
     public class Claim : Entity
     {
-        public string Name { get; set; }
+        public string Type { get; set; }
+
+        public string Value { get; set; }
 
         public override string ToString()
         {
-            return string.Format("{0}, Claim (Name: {1}", base.ToString(), Name);
+            return string.Format("{0}, Claim (Type: {1}, Value: {2}", base.ToString(), Type, Value);
         }
     }
 }

@@ -1,12 +1,15 @@
 ﻿// Copyright (c) Philipp Wagner. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using ConnectR.Infrastructure.Authentication;
 using ConnectR.Infrastructure.Database;
 using ConnectR.Infrastructure.Database.Entities;
+using ConnectR.Model;
 using ConnectR.Requests;
 using Nancy.Security;
 using NPoco;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ConnectR.Services
 {
@@ -17,7 +20,7 @@ namespace ConnectR.Services
     {
         private ICryptoService cryptoService;
 
-        public DatabaseAuthService(IDatabaseFactory databaseFactory, ICryptoService cryptoService) 
+        public DatabaseAuthService(IDatabaseFactory databaseFactory, ICryptoService cryptoService)
             : base(databaseFactory)
         {
             this.cryptoService = cryptoService;
@@ -27,6 +30,8 @@ namespace ConnectR.Services
         {
             using (var database = DatabaseFactory.GetDatabase())
             {
+                // Let's do this in a transaction, so we cannot register two users
+                // with the same name. Seems to be a useful requirement.
                 using (var tran = database.GetTransaction())
                 {
                     string hashBase64;
@@ -48,35 +53,81 @@ namespace ConnectR.Services
             }
         }
 
-        public bool TryAuthentifcate(AuthenticateUserRequest request, out IUserIdentity identity)
+        public bool TryAuthentifcate(Credentials credentials, out Model.UserIdentity identity)
         {
+            identity = null;
+
             using (var database = DatabaseFactory.GetDatabase())
             {
-                identity = null;
+                User user = database.Query<User>().FirstOrDefault(x => x.Name == credentials.UserName);
 
-                User user = database.Query<User>().FirstOrDefault(x => x.Name == request.UserName);
-
+                // Check if there is a User:
                 if (user == null)
                 {
                     return false;
                 }
 
-                if (user.PasswordHash != cryptoService.ComputeHash(request.Password, user.PasswordSalt))
+                // Make sure the Hashed Passwords match:
+                if (user.PasswordHash != cryptoService.ComputeHash(credentials.Password, user.PasswordSalt))
                 {
                     return false;
                 }
 
-                IList<string> claims = database.Fetch<string>(@"
+                // We got a User, now obtain his claims from DB:
+                IList<Claim> claims = database.Fetch<Claim>(@"
                                 select c.*
                                 from auth.user u 
                                     inner join auth.user_claim uc on u.user_id = uc.user_id
                                     inner join auth.claim c on uc.claim_id = c.claim_id
                                 where u.user_id = @0", user.Id);
-
-                //identity = new DefaultUserIdentity(user.Name, claims);
-
+                
+                // And return the UserIdentity:
+                identity = Convert(user, claims);
+                
                 return true;
             }
+        }
+
+        /// <summary>
+        /// Converts between Model and DB Entity.
+        /// </summary>
+        UserIdentity Convert(User user, IList<Claim> claims)
+        {
+            if (user == null)
+            {
+                return null;
+            }
+            return new UserIdentity()
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Claims = Convert(claims)
+            };
+        }
+
+        /// <summary>
+        /// Converts between Model and DB Entity.
+        /// </summary>
+        ClaimIdentity Convert(Claim entity)
+        {
+            return new ClaimIdentity()
+            {
+                Id = entity.Id,
+                Type = entity.Type,
+                Value = entity.Value
+            };
+        }
+
+        /// <summary>
+        /// Converts between Model and DB Entity.
+        /// </summary>
+        IList<ClaimIdentity> Convert(IList<Claim> entities)
+        {
+            if (entities == null)
+            {
+                return null;
+            }
+            return entities.Select(x => Convert(x)).ToList();
         }
     }
 }

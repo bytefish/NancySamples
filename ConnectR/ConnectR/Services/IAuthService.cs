@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Philipp Wagner. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using ConnectR.Infrastructure.Authentication;
+using ConnectR.Model;
 using ConnectR.Requests;
-using Nancy.Security;
 
 namespace ConnectR.Services
 {
@@ -10,6 +11,6 @@ namespace ConnectR.Services
     {
         void Register(RegisterUserRequest register);
 
-        bool TryAuthentifcate(AuthenticateUserRequest request, out IUserIdentity identity);
+        bool TryAuthentifcate(Credentials request, out UserIdentity identity);
     }
 }

@@ -8,6 +8,8 @@ namespace ConnectR.Services
     /// </summary>
     public interface IApplicationSettings
     {
+        string TokenEndpointBasePath { get; }
+
         string NancyBasePath { get; }
 
         string SignalRBasePath { get; }
