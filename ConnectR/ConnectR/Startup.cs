@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using ConnectR.Hubs;
+using ConnectR.Infrastructure.Authentication;
 using ConnectR.Infrastructure.Database;
 using ConnectR.Infrastructure.SignalR;
 using ConnectR.Security;
@@ -22,11 +23,11 @@ namespace ConnectR
     {
         public void Configuration(IAppBuilder app)
         {
-            app.UseCors(CorsOptions.AllowAll);
-
             TinyIoCContainer container = new TinyIoCContainer();
 
             RegisterDependencies(container);
+
+            app.UseCors(CorsOptions.AllowAll);
 
             SetupAuth(app, container);
             SetupSignalR(app, container);
@@ -43,7 +44,7 @@ namespace ConnectR
             container.Register<ICryptoService, CryptoService>();
             container.Register<IAuthService, DatabaseAuthService>();
             container.Register<IChatService, LoggingChatService>();
-            
+
             // Register Hubs:
             container.Register<LoggingHubPipelineModule>();
             container.Register<ChatHub>();
@@ -63,7 +64,14 @@ namespace ConnectR
             });
 
             // Use default options:
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions()
+            {
+                Provider = new OAuthTokenProvider(
+                    req => req.Query.Get("bearer_token"),
+                    req => req.Query.Get("access_token"),
+                    req => req.Query.Get("token"),
+                    req => req.Headers.Get("X-Token"))
+            });
         }
 
         private void SetupNancy(IAppBuilder app, TinyIoCContainer container)

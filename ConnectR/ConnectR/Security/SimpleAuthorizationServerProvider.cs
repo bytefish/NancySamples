@@ -24,10 +24,7 @@ namespace ConnectR.Security
         }
 
         public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
-        {
-
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
- 
+        { 
             if (!CredentialsAvailable(context))
             {
                 context.SetError("invalid_grant", "User or password is missing.");
