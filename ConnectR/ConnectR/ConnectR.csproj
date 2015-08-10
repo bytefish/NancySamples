@@ -185,6 +185,8 @@
     <Compile Include="Services\IAuthService.cs" />
     <Compile Include="Services\IChatService.cs" />
     <Compile Include="Services\ICryptoService.cs" />
+    <Compile Include="Services\IUploadNotificationService.cs" />
+    <Compile Include="Services\UploadNotificationService.cs" />
     <Compile Include="Services\LoggingChatService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

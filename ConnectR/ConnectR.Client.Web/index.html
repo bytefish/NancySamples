@@ -51,6 +51,9 @@
             var self = this;
 
             self.connect = function (token) {
+
+                console.log(token);
+
                 $.connection.hub.url = "http://localhost:8080/signalr";
                 $.connection.hub.qs = { 'access_token': token };
 

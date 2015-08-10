@@ -9,6 +9,7 @@ using ConnectR.Security;
 using ConnectR.Services;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
@@ -44,6 +45,7 @@ namespace ConnectR
             container.Register<ICryptoService, CryptoService>();
             container.Register<IAuthService, DatabaseAuthService>();
             container.Register<IChatService, LoggingChatService>();
+            container.Register<IUploadNotificationService, UploadNotificationService>();
 
             // Register Hubs:
             container.Register<LoggingHubPipelineModule>();
@@ -87,6 +89,10 @@ namespace ConnectR
 
             // Resolve from the container shared with Nancy:
             var resolver = new TinyDependencyResolver(container);
+
+            // Register the ConnectionManager. Can this be done in a different way?
+            var connectionManager = resolver.Resolve<IConnectionManager>();
+            container.Register<IConnectionManager>(connectionManager);
 
             SetupHubPipeline(resolver);
 

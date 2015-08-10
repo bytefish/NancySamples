@@ -16,16 +16,18 @@ namespace ConnectR.Modules
 {
     public class FileUploadModule : ConnectRModule
     {
-        private IRootPathProvider rootPathProvider;
-        private IApplicationSettings applicationSettings;
+        private readonly IRootPathProvider rootPathProvider;
+        private readonly IApplicationSettings applicationSettings;
+        private readonly IUploadNotificationService uploadNotificationService;
 
-        public FileUploadModule(IRootPathProvider rootPathProvider, IApplicationSettings applicationSettings)
+        public FileUploadModule(IRootPathProvider rootPathProvider, IApplicationSettings applicationSettings, IUploadNotificationService uploadNotificationService)
            : base("/file")
         {
             this.RequiresMSOwinAuthentication();
 
             this.rootPathProvider = rootPathProvider;
             this.applicationSettings = applicationSettings;
+            this.uploadNotificationService = uploadNotificationService;
 
             Post["/upload"] = parameters =>
             {
@@ -37,7 +39,9 @@ namespace ConnectR.Modules
 
                 FileUploadRequest request = this.BindAndValidate<FileUploadRequest>();
                 FileUploadResponse response = StoreImage(request);
-        
+                
+                uploadNotificationService.OnFileUploaded(response.Id);
+
                 return Negotiate
                     .WithStatusCode(HttpStatusCode.OK)
                     .WithModel(response);
