@@ -141,6 +141,7 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="Infrastructure\SignalR\AuthorizeClaimsAttribute.cs" />
     <Compile Include="Infrastructure\Authentication\Constants.cs" />
     <Compile Include="Infrastructure\Authentication\Credentials.cs" />
     <Compile Include="Infrastructure\Authentication\PrincipalExtensions.cs" />

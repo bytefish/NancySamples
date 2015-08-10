@@ -1,4 +1,5 @@
-﻿using ConnectR.Services;
+﻿using ConnectR.Infrastructure.Authentication;
+using ConnectR.Services;
 using log4net;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace ConnectR.Hubs
 {
+    [AuthorizeClaims(ConnectRClaimTypes.Admin)]
     public class ChatHub : Hub
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
