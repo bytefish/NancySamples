@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace ConnectR.Model
 {
+    /// <summary>
+    /// Represents a UserIdentity with a Users Name and Claims.
+    /// </summary>
     public class UserIdentity
     {
         public int Id {get; set; }

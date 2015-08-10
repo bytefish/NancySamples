@@ -3,6 +3,9 @@
 
 namespace ConnectR.Services
 {
+    /// <summary>
+    /// Cryptographic functions for creating and computing hashes.
+    /// </summary>
     public interface ICryptoService
     {
         void CreateHash(byte[] data, out byte[] hash, out byte[] salt);

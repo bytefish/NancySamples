@@ -3,6 +3,9 @@
 
 namespace ConnectR.Services
 {
+    /// <summary>
+    /// Sample Service used by the ChatHub.
+    /// </summary>
     public interface IChatService
     {
         void AddMessage(string name, string message);

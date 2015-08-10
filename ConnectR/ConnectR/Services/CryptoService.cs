@@ -7,6 +7,9 @@ using System.Text;
 
 namespace ConnectR.Services
 {
+    /// <summary>
+    /// A crypto service based on SHA256 Hashing.
+    /// </summary>
     public class CryptoService : ICryptoService
     {
         private IApplicationSettings settings;
@@ -51,6 +54,9 @@ namespace ConnectR.Services
         }
     }
 
+    /// <summary>
+    /// Convenience method to make life a easy.
+    /// </summary>
     public static class CryptoServiceExtensions
     {
         public static void CreateHash(this ICryptoService cryptoService, string data, out string hash, out string salt)

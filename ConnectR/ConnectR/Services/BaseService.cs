@@ -5,6 +5,9 @@ using ConnectR.Infrastructure.Database;
 
 namespace ConnectR.Services
 {
+    /// <summary>
+    /// The BaseService provides access to the <see cref="IDatabaseFactory"/>.
+    /// </summary>
     public abstract class BaseService 
     {
         protected readonly IDatabaseFactory DatabaseFactory;

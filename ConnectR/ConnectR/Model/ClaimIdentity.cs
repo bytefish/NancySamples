@@ -3,6 +3,9 @@
 
 namespace ConnectR.Model
 {
+    /// <summary>
+    /// Represents a Claim with a Type and a Value.
+    /// </summary>
     public class ClaimIdentity
     {
         public int Id { get; set; }

@@ -7,6 +7,9 @@ using System.Reflection;
 
 namespace ConnectR.Infrastructure.SignalR
 {
+    /// <summary>
+    /// This module will be hooked into the HubPipeline, so we can log all incoming and outgoing requests.
+    /// </summary>
     public class LoggingHubPipelineModule : HubPipelineModule
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);

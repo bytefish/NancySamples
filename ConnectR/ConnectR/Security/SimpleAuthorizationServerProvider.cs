@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ConnectR.Security
 {
+    /// <summary>
+    /// Implements an <see cref="OAuthAuthorizationServerProvider"/> using a custom authentication backend.
+    /// </summary>
     public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
         private readonly IAuthService authService;

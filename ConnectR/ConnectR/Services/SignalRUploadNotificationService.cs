@@ -9,13 +9,13 @@ using System.Reflection;
 
 namespace ConnectR.Services
 {
-    public class UploadNotificationService : IUploadNotificationService
+    public class SignalRUploadNotificationService : IUploadNotificationService
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IConnectionManager connectionManager;
 
-        public UploadNotificationService(IConnectionManager connectionManager)
+        public SignalRUploadNotificationService(IConnectionManager connectionManager)
         {
             this.connectionManager = connectionManager;
         }

@@ -9,6 +9,10 @@ using System.Linq;
 
 namespace ConnectR.Infrastructure.SignalR
 {
+    /// <summary>
+    /// Extends the <see cref="DefaultDependencyResolver"/> by using a <see cref="TinyIoCContainer"/> for 
+    /// resolving additional dependencies.
+    /// </summary>
     internal class TinyDependencyResolver : DefaultDependencyResolver
     {
         private readonly TinyIoCContainer container;

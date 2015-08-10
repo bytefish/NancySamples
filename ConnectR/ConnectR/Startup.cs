@@ -45,7 +45,7 @@ namespace ConnectR
             container.Register<ICryptoService, CryptoService>();
             container.Register<IAuthService, DatabaseAuthService>();
             container.Register<IChatService, LoggingChatService>();
-            container.Register<IUploadNotificationService, UploadNotificationService>();
+            container.Register<IUploadNotificationService, SignalRUploadNotificationService>();
 
             // Register Hubs:
             container.Register<LoggingHubPipelineModule>();

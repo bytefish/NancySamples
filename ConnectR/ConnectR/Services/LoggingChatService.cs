@@ -6,6 +6,9 @@ using System.Reflection;
 
 namespace ConnectR.Services
 {
+    /// <summary>
+    /// Logging based implementation of a <see cref="IChatService"/>.
+    /// </summary>
     public class LoggingChatService : IChatService
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);

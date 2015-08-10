@@ -7,6 +7,9 @@ using ConnectR.Requests;
 
 namespace ConnectR.Services
 {
+    /// <summary>
+    /// An Authentication Service to authenticate incoming requests.
+    /// </summary>
     public interface IAuthService
     {
         void Register(RegisterUserRequest register);

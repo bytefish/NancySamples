@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace ConnectR.Infrastructure.Authentication
 {
+    /// <summary>
+    /// Implements a Custom <see cref="AuthorizeAttribute"/>, so that Claims can be passed as 
+    /// parameters instead of a comma separated list. 
+    /// 
+    /// TODO Think about overriding the other virtual methods.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
     public class AuthorizeClaimsAttribute : AuthorizeAttribute
     {

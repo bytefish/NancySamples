@@ -23,15 +23,12 @@ namespace ConnectR.Modules
         public FileUploadModule(IRootPathProvider rootPathProvider, IApplicationSettings applicationSettings, IUploadNotificationService uploadNotificationService)
            : base("/file")
         {
-            this.RequiresMSOwinAuthentication();
-
             this.rootPathProvider = rootPathProvider;
             this.applicationSettings = applicationSettings;
             this.uploadNotificationService = uploadNotificationService;
 
             Post["/upload"] = parameters =>
             {
-
                 if (!this.Principal.HasClaim(ConnectRClaimTypes.Admin))
                 {
                     return HttpStatusCode.Forbidden;
